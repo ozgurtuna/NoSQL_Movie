@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Data Analysis</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Movie Genre Popularity</h2>
+    <button id="loadData">Load Data</button>
+    <table id="movieTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Year</th>
+                <th>Average Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will go here -->
+        </tbody>
+    </table>
+
+    <h2>Movie Genre Report</h2>
+    <button id="loadReport">Load Report</button>
+    <button id="showGenrePopularityChart">Show Genre Popularity Chart</button>
+    <table id="genreReportTable">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Most Popular Genre</th>
+                <th>Movies Produced</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Genre Report rows will go here -->
+        </tbody>
+    </table>
+    <canvas id="genrePopularityChart" style="display: none;"></canvas> <!-- Canvas for chart -->
+
+
+    <h2>Genre-Budget Analysis</h2>
+    <button id="loadGenreBudgetAnalysis">Load Genre-Budget Analysis</button>
+    <button id="showGenreBudgetChart">Show Genre-Budget Chart</button> <!-- New button -->
+    <div id="analysisContainer"></div>
+    <canvas id="genreBudgetChart"></canvas> <!-- New canvas for chart -->
+
+
+    <h2>Box Office Analysis</h2>
+    <button id="loadBoxOfficeAnalysis">Load Box Office Analysis</button>
+    <button id="showBoxOfficeChart">Show Box Office Chart</button> <!-- New button -->
+    <div id="boxOfficeAnalysisContainer"></div>
+    <canvas id="boxOfficeChart" ></canvas> <!-- New canvas for chart -->
+
+    <script src="script.js"></script>
+</body>
+</html>
