@@ -37,6 +37,7 @@
     <h2>Movie Genre Report</h2>
     <button id="loadReport">Load Report</button>
     <button id="showGenrePopularityChart">Show Genre Popularity Chart</button>
+    <button id="analyzeGenrePopularity">Analyze Genre Popularity</button>
     <table id="genreReportTable">
         <thead>
             <tr>
@@ -62,8 +63,9 @@
     <h2>Box Office Analysis</h2>
     <button id="loadBoxOfficeAnalysis">Load Box Office Analysis</button>
     <button id="showBoxOfficeChart">Show Box Office Chart</button> <!-- New button -->
-    <div id="boxOfficeAnalysisContainer"></div>
-    <canvas id="boxOfficeChart" ></canvas> <!-- New canvas for chart -->
+    <div id="boxOfficeAnalysisContainer"></div> <!-- Container for displaying analysis -->
+    <canvas id="boxOfficeChart" style="display:none;"></canvas> <!-- New canvas for chart, initially hidden -->
+
 
     <script src="script.js"></script>
 </body>

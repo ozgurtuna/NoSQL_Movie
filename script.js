@@ -142,6 +142,8 @@ document.getElementById('showGenrePopularityChart').addEventListener('click', fu
         });
 });
 
+
+
 function displayBoxOfficeChart(data) {
     const ctx = document.getElementById('boxOfficeChart').getContext('2d');
     const labels = data.map(item => `${monthNames[item._id.month - 1]} - ${item._id.genre}`); // Label for each genre and month
@@ -306,16 +308,42 @@ function displayBoxOfficeAnalysis(data) {
     const analysisContainer = document.getElementById('boxOfficeAnalysisContainer');
     analysisContainer.innerHTML = ''; // Clear existing content
 
+    let monthlyData = {};
+
+    // Aggregate data by month
     data.forEach(item => {
-        const monthName = monthNames[item._id.month - 1]; // Convert month number to month name
+        const month = item._id.month;
+        if (!monthlyData[month]) {
+            monthlyData[month] = {
+                totalRevenue: 0,
+                totalRating: 0,
+                movieCount: 0,
+                numberOfGenres: 0
+            };
+        }
+        monthlyData[month].totalRevenue += item.averageRevenue * item.count;
+        monthlyData[month].totalRating += item.averageRating * item.count;
+        monthlyData[month].movieCount += item.count;
+        monthlyData[month].numberOfGenres += 1;
+    });
+
+    // Calculate average and create display elements
+    Object.keys(monthlyData).forEach(month => {
+        const monthData = monthlyData[month];
+        const averageRevenue = monthData.totalRevenue / monthData.movieCount;
+        const averageRating = monthData.totalRating / monthData.movieCount;
+
+        const monthName = monthNames[month - 1]; // Convert month number to month name
         const div = document.createElement('div');
-        div.innerHTML = `<h3>Month: ${monthName}, Genre: ${item._id.genre}</h3>
-                         <p>Average Revenue: ${item.averageRevenue.toFixed(2)}</p>
-                         <p>Average Rating: ${item.averageRating.toFixed(2)}</p>
-                         <p>Number of Movies: ${item.count}</p>`;
+        div.innerHTML = `<h3>Month: ${monthName}</h3>
+                         <p>Average Revenue: ${averageRevenue.toFixed(2)}</p>
+                         <p>Average Rating: ${averageRating.toFixed(2)}</p>
+                         <p>Number of Movies: ${monthData.movieCount}</p>
+                         <p>Genres Considered: ${monthData.numberOfGenres}</p>`;
         analysisContainer.appendChild(div);
     });
 }
+
 
 // Event listener for the 'Load Box Office Analysis' button
 document.getElementById('loadBoxOfficeAnalysis').addEventListener('click', function() {
@@ -329,3 +357,63 @@ document.getElementById('loadBoxOfficeAnalysis').addEventListener('click', funct
             alert('Failed to load box office analysis.');
         });
 });
+
+function displayBoxOfficeChart(data) {
+    const ctx = document.getElementById('boxOfficeChart').getContext('2d');
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+
+    let monthlyData = {};
+    data.forEach(item => {
+        const month = item._id.month;
+        if (!monthlyData[month]) {
+            monthlyData[month] = {
+                totalRevenue: 0,
+                totalRating: 0,
+                movieCount: 0
+            };
+        }
+        monthlyData[month].totalRevenue += item.averageRevenue * item.count;
+        monthlyData[month].totalRating += item.averageRating * item.count;
+        monthlyData[month].movieCount += item.count;
+    });
+
+    const labels = Object.keys(monthlyData).map(month => monthNames[month - 1]);
+    const averageRating = Object.values(monthlyData).map(item => (item.totalRating / item.movieCount).toFixed(2));
+    const averageRevenue = Object.values(monthlyData).map(item => (item.totalRevenue / item.movieCount).toFixed(2));
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Average Rating',
+                data: averageRating,
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `Avg Rating: ${context.parsed.y}, Avg Revenue: $${averageRevenue[context.dataIndex]}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    document.getElementById('boxOfficeChart').style.display = 'block'; // Show the chart
+}
+
+
+
