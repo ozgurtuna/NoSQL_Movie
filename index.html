@@ -20,7 +20,7 @@
 <body>
     <h2>Movie Genre Popularity</h2>
     <button id="loadData">Load Data</button>
-    <table id="movieTable">
+    <table id="movieTable" class="hidden">
         <thead>
             <tr>
                 <th>Title</th>
@@ -38,7 +38,7 @@
     <button id="loadReport">Load Report</button>
     <button id="showGenrePopularityChart">Show Genre Popularity Chart</button>
     <button id="analyzeGenrePopularity">Analyze Genre Popularity</button>
-    <table id="genreReportTable">
+    <table id="genreReportTable" class="hidden">
         <thead>
             <tr>
                 <th>Year</th>
@@ -50,23 +50,63 @@
             <!-- Genre Report rows will go here -->
         </tbody>
     </table>
+    <table id="genrePopularityCountTable" class="hidden">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be added here dynamically -->
+        </tbody>
+    </table>
     <canvas id="genrePopularityChart" style="display: none;"></canvas> <!-- Canvas for chart -->
 
 
     <h2>Genre-Budget Analysis</h2>
     <button id="loadGenreBudgetAnalysis">Load Genre-Budget Analysis</button>
-    <button id="showGenreBudgetChart">Show Genre-Budget Chart</button> <!-- New button -->
-    <div id="analysisContainer"></div>
+    <button id="showGenreBudgetChart">Show Genre-Budget Chart</button> 
+    <button id="budgetRatingComparison">Budget-Rating Comparison</button> <!-- New button -->
+    <div id="budgetRatingResult"></div><!-- New button -->
+    <div id="analysisContainer" style="border: 1px solid #ccc; padding: 10px;"></div>
     <canvas id="genreBudgetChart"></canvas> <!-- New canvas for chart -->
 
 
     <h2>Box Office Analysis</h2>
     <button id="loadBoxOfficeAnalysis">Load Box Office Analysis</button>
     <button id="showBoxOfficeChart">Show Box Office Chart</button> <!-- New button -->
+    <button id="showBoxOfficeSummary">Show Box Office Summary</button>
     <div id="boxOfficeAnalysisContainer"></div> <!-- Container for displaying analysis -->
+    <table id="boxOfficeRevenueSummaryTable" class="hidden">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Average Revenue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data rows will be added dynamically -->
+        </tbody>
+    </table>
+    
     <canvas id="boxOfficeChart" style="display:none;"></canvas> <!-- New canvas for chart, initially hidden -->
-
+    
 
     <script src="script.js"></script>
 </body>
 </html>
+
+
+<style>
+    
+    #analysisContainer {
+        max-height: 300px; /* Set a maximum height */
+        overflow-y: scroll; /* Enable vertical scrolling */
+    }
+
+    .hidden {
+        display: none;
+    }
+    /* Rest of your CSS */
+</style>
